@@ -1,0 +1,19 @@
+<mat-toolbar class="menu-toolbar">    
+    <mat-form-field>
+        <mat-select [(ngModel)]="chessboard.Title" name="board" placeholder="Echiquier"> 
+            <mat-option *ngFor="let c of chessboards" [value]="c.Title">{{c.Title}}</mat-option>
+        </mat-select>
+    </mat-form-field>
+    
+    <mat-form-field class="menu-piece">
+        <mat-select [(ngModel)]="piece.Title" name="pieces" placeholder="Pièces"> 
+            <mat-option *ngFor="let p of pieces" [value]="p.Title">{{p.Title}}</mat-option>
+        </mat-select>
+    </mat-form-field>
+    
+    <div class="menu-flipboard">
+        <mat-checkbox [(ngModel)]="chessboard.Side" color="primary">
+            Tourner l'echiquier
+        </mat-checkbox>
+    </div> 
+</mat-toolbar>

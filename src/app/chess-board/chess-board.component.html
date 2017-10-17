@@ -1,0 +1,19 @@
+<div [class]="calcChessboardClass()">
+    <div (mouseleave)="mouseleaveBoard($event)">
+        <div *ngFor="let c of position.diag; let i = index"
+             [class]="calcCaseClass(i)" 
+             (mousedown)="mousedownCase($event, i)" 
+             (mouseup)="mouseupCase($event, i)" 
+             (mousemove)="mousemoveCase($event, i)" 
+             >
+        </div>
+    </div>
+</div>
+<div *ngIf="selectedPiece != 0">
+    <div *ngIf="selectedPiece != 0"
+        [class]="calcSelectedClass()"      
+        [style.top]="selectedTop" 
+        [style.left]="selectedLeft"
+        >
+    </div>
+</div>
