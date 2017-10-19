@@ -33,7 +33,7 @@ export class Position {
     }
     
     isInCheck() {
-        let a, s, t, roi;
+        let a, s, t, tour, fou;
         
         if (this.trait) {
             s = -1;
@@ -53,25 +53,44 @@ export class Position {
          || (Tools.isIn120(this.roi[t], -12) && this.diag[this.roi[t] - 10] === s * 2)
          || (Tools.isIn120(this.roi[t], 8) && this.diag[this.roi[t] + 6] === s * 2)
          || (Tools.isIn120(this.roi[t], -8) && this.diag[this.roi[t] - 6] === s * 2)         
-            ) {
+            ) {            
             return true;            
         }
                         
-        for (roi in Tools.tabRoi) {
-            for (a = 1; Tools.isIn120(this.roi[t], Tools.tabRoi[roi][0] * a); a++) {
-                if (this.diag[this.roi[t] + Tools.tabRoi[roi][1] * a] !== 0) {
-                    if (this.diag[this.roi[t] + Tools.tabRoi[roi][1] * a] === s * 3
-                      ||this.diag[this.roi[t] + Tools.tabRoi[roi][1] * a] === s * 5
-                      ||(a === 1 && this.diag[this.roi[t] + Tools.tabRoi[roi][1]] === s * 6)
-                    ) {
+        for (fou in Tools.tabFou) {            
+            for (a = 1; Tools.isIn120(this.roi[t], Tools.tabFou[fou][0] * a); a++) {                                
+                if (this.diag[this.roi[t] + Tools.tabFou[fou][1] * a] !== 0) {                    
+                    if (this.diag[this.roi[t] + Tools.tabFou[fou][1] * a] === s * 3
+                      || this.diag[this.roi[t] + Tools.tabFou[fou][1] * a] === s * 5                    
+                      ||(a === 1 && this.diag[this.roi[t] + Tools.tabFou[fou][1]] === s * 6)
+                    ) {                        
                         return true;
                     } else {
                         break;
                     }
                 }                   
             }
-        }                
+        }
+        
+        for (tour in Tools.tabTour) {
+            for (a = 1; Tools.isIn120(this.roi[t], Tools.tabTour[tour][0] * a); a++) {
+                if (this.diag[this.roi[t] + Tools.tabTour[tour][1] * a] !== 0) {
+                    if (this.diag[this.roi[t] + Tools.tabTour[tour][1] * a] === s * 4
+                      || this.diag[this.roi[t] + Tools.tabTour[tour][1] * a] === s * 5                     
+                      ||(a === 1 && this.diag[this.roi[t] + Tools.tabTour[tour][1]] === s * 6)
+                    ) {                        
+                        return true;
+                    } else {
+                        break;
+                    }
+                }                   
+            }
+        }            
         
         return false;          
+    }
+    
+    static getPosition(position: Position): Position {
+        return new Position(position.diag, position.trait, position.roi, position.pr, position.gr, position.pep);
     }
 }

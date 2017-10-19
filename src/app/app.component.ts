@@ -3,6 +3,7 @@ import { Chessboard } from './model/Chessboard';
 import { Piece } from './model/Piece'; 
 
 import { Position } from './model/Position';
+import { Positions } from './model/Positions';
 
 @Component({
   selector: 'app-root',
@@ -44,4 +45,8 @@ export class AppComponent {
     [true, true],
     -1            
   );
+  
+  constructor() {
+       
+  }
 }

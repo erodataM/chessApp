@@ -1,6 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Chessboard } from '../model/Chessboard';
 import { Piece } from '../model/Piece';
+import { Tools } from '../model/Tools';
 import { Position } from '../model/Position';
 import { Positions } from '../model/Positions';  
 
@@ -20,8 +21,10 @@ export class ChessBoardComponent implements OnInit {
   
   tempPosition: Position;
   selectedPiece: number = 0;
+  selectedCase: number = -1;
   selectedTop: string = '';
   selectedLeft: string = '';
+  ghosts: number[] = [];
   
   private _tabPieces = { 
     '0' : '',
@@ -37,11 +40,16 @@ export class ChessBoardComponent implements OnInit {
     let sReturn = 'case ';
 
     sReturn += this.piece.Title + ' ';
-    sReturn += this._tabPieces[this.position.diag[this._getRelativeIndex(index)].toString()];    
+    
+    if (this.ghosts.indexOf(this._getRelativeIndex(index)) >= 0) {        
+        sReturn += this._tabPieces[this.selectedPiece] + ' ghost';
+    } else {
+        sReturn += this._tabPieces[this.position.diag[this._getRelativeIndex(index)].toString()];
+    }
               
     return sReturn;
   }
-  
+       
   calcChessboardClass() {
     return 'board ' + this.chessboard.Title + ' ' + (this.chessboard.Side ? 'noir' : 'blanc');
   }
@@ -55,27 +63,51 @@ export class ChessBoardComponent implements OnInit {
     return sReturn;
   }
   
+  getGhosts(index:number) {
+    let positions = new Positions(this.tempPosition);
+    positions.generate();
+    
+    return positions.list.filter(p => p.diag[index] === 0).map(p => Tools.indexes.filter((c, i) => (p.diag[c] !== this.tempPosition.diag[c]) && i !== index && p.diag[c] === this.selectedPiece)[0]);  
+  }
+  
   mousedownCase(event: MouseEvent, index: number) {
     event.preventDefault();
     
     let positions = new Positions(this.position);
     positions.generate();    
     
-    if (this.isCasePlayable(positions, this._getRelativeIndex(index))) {
-        this.tempPosition = new Position(this.position.diag, this.position.trait, this.position.roi, this.position.pr, this.position.gr, this.position.pep);
-        
-        this.selectedPiece = this.position.diag[this._getRelativeIndex(index)];
+    if (this.isCasePlayable(positions, this._getRelativeIndex(index))) {        
+        this.tempPosition = Position.getPosition(this.position);               
+        this.selectedPiece = this.position.diag[this._getRelativeIndex(index)];       
+        this.ghosts = this.getGhosts(this._getRelativeIndex(index));  
+        this.selectedCase = this._getRelativeIndex(index);
         this.position.diag[this._getRelativeIndex(index)] = 0;       
         this.selectedTop = event.clientY - 37.5 + 'px';
-        this.selectedLeft = event.clientX  - 37.5 + 'px'; 
+        this.selectedLeft = event.clientX  - 37.5 + 'px';                 
     }
   }
   
   mouseupCase(event: MouseEvent, index: number) {    
     event.preventDefault();
     
-    this.selectedPiece = 0; 
-    this.position = new Position(this.tempPosition.diag, this.tempPosition.trait, this.tempPosition.roi, this.tempPosition.pr, this.tempPosition.gr, this.tempPosition.pep);
+    if (this.selectedPiece !== 0) {
+        this.position.diag[this._getRelativeIndex(index)] = this.selectedPiece;
+    
+        let positions = new Positions(this.tempPosition);
+        positions.generate();
+
+        let aMoves = positions.list.filter((p) => p.diag[index] === this.position.diag[index] && p.diag[this.selectedCase] === this.position.diag[this.selectedCase]);                 
+        
+        if (aMoves.length === 1) {
+            this.position = aMoves[0];
+        } else {            
+            this.position = Position.getPosition(this.tempPosition);                                 
+        }
+        
+        this.ghosts = [];
+        this.selectedPiece = 0;
+        this.selectedCase = -1;
+    }        
   }
   
   mousemoveCase(event: MouseEvent, index: number) {
@@ -90,7 +122,7 @@ export class ChessBoardComponent implements OnInit {
     event.preventDefault();
     if (this.selectedPiece !== 0) {
         this.selectedPiece = 0; 
-        this.position = new Position(this.tempPosition.diag, this.tempPosition.trait, this.tempPosition.roi, this.tempPosition.pr, this.tempPosition.gr, this.tempPosition.pep);
+        this.position = Position.getPosition(this.tempPosition);
     }
   }
   

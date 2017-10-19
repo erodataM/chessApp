@@ -17,6 +17,11 @@
     pointer-events: none;    
 }
 
+.ghost {
+    opacity: 0.5;
+    filter: alpha(opacity=50);
+}
+
 .erable.blanc {
     background-image: url("/assets/images/echi_erable_c1.gif");    
 }
