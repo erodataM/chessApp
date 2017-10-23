@@ -28,6 +28,19 @@ export class Tools {
     static isIn120(pt:number, l:number):boolean {
         return (tab120[tab64[pt] + l] === 1);
     }
+    
+    static isOnPromotion(trait: boolean, i: number) {        
+        let s = trait ? 1 : -1;
+        
+        return (i > 7 && i < 16 && s === 1) || (i > 47 && i < 56 && s === -1);
+    }
+    
+    static isPawnFirstMove(trait: boolean, i: number) {        
+        let s = trait ? 1 : -1;
+        
+        return (i > 47 && i < 56 && s === 1) || (i > 7 && i <16 && s === -1);
+    }
+    
     static indexes = [
         0, 1, 2, 3, 4, 5, 6, 7,
         8, 9,10,11,12,13,14,15,
@@ -38,9 +51,25 @@ export class Tools {
        48,49,50,51,52,53,54,55,
        56,57,58,59,60,61,62,63 
     ];
+    
     static tabPion = [[11, 9, 1], [9, 7, -1]]; 
     static tabCav = [[21, 17], [19, 15], [-21, -17], [-19, -15], [12, 10], [8, 6], [-12, -10], [-8, -6]];
     static tabFou = [[11, 9], [-11, -9], [9, 7], [-9, -7]];
     static tabTour = [[10, 8], [-10, -8], [1, 1], [-1, -1]];
     static tabRoi = [[11, 9], [-11, -9], [9, 7], [-9, -7], [10, 8], [-10, -8], [1, 1], [-1, -1]];
+    
+    static fen = {
+        '1' : 'P',
+        '2' : 'N',
+        '3' : 'B', 
+        '4' : 'R',
+        '5' : 'Q',
+        '6' : 'K',
+        '-1' : 'p',
+        '-2' : 'n',
+        '-3' : 'b', 
+        '-4' : 'r',
+        '-5' : 'q',
+        '-6' : 'k',
+    }       
 }

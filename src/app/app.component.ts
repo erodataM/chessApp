@@ -28,25 +28,9 @@ export class AppComponent {
     new Piece('habsburg'),
   ]
   
-  position: Position = new Position(
-    [
-        -4,-2,-3,-5,-6,-3,-2,-4,
-        -1,-1,-1,-1,-1,-1,-1,-1,
-         0, 0, 0, 0, 0, 0, 0, 0,
-         0, 0, 0, 0, 0, 0, 0, 0,
-         0, 0, 0, 0, 0, 0, 0, 0,
-         0, 0, 0, 0, 0, 0, 0, 0,
-         1, 1, 1, 1, 1, 1, 1, 1,
-         4, 2, 3, 5, 6, 3, 2, 4      
-    ],
-    true,
-    [60, 4],
-    [true, true],
-    [true, true],
-    -1            
-  );
+  position: Position = Position.getPositionFromFen('r3k2r/p1ppqpb1/bn2pnp1/3PN3/1p2P3/2N2Q1p/PPPBBPPP/R3K2R w KQkq -');
   
   constructor() {
-       
+       console.log(this.position);
   }
 }

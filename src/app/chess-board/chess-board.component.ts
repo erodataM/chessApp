@@ -74,8 +74,8 @@ export class ChessBoardComponent implements OnInit {
     event.preventDefault();
     
     let positions = new Positions(this.position);
-    positions.generate();    
-    
+    positions.generate();
+    console.log(positions.list.filter(p => p.diag[index] === 0));
     if (this.isCasePlayable(positions, this._getRelativeIndex(index))) {        
         this.tempPosition = Position.getPosition(this.position);               
         this.selectedPiece = this.position.diag[this._getRelativeIndex(index)];       
@@ -90,27 +90,34 @@ export class ChessBoardComponent implements OnInit {
   mouseupCase(event: MouseEvent, index: number) {    
     event.preventDefault();
     
-    if (this.selectedPiece !== 0) {
-        this.position.diag[this._getRelativeIndex(index)] = this.selectedPiece;
-    
-        let positions = new Positions(this.tempPosition);
-        positions.generate();
-
-        let aMoves = positions.list.filter((p) => p.diag[index] === this.position.diag[index] && p.diag[this.selectedCase] === this.position.diag[this.selectedCase]);                 
-        
-        if (aMoves.length === 1) {
-            this.position = aMoves[0];
-        } else {            
-            this.position = Position.getPosition(this.tempPosition);                                 
-        }
-        
+    if (index === this.selectedCase) {
+        this.position = Position.getPosition(this.tempPosition);
         this.ghosts = [];
         this.selectedPiece = 0;
         this.selectedCase = -1;
-    }        
+    } else {    
+        if (this.selectedPiece !== 0) {
+            this.position.diag[this._getRelativeIndex(index)] = this.selectedPiece;
+
+            let positions = new Positions(this.tempPosition);
+            positions.generate();
+
+            let aMoves = positions.list.filter((p) => p.diag[index] === this.position.diag[index] && p.diag[this.selectedCase] === this.position.diag[this.selectedCase]);                 
+
+            if (aMoves.length === 1) {
+                this.position = aMoves[0];
+            } else {            
+                this.position = Position.getPosition(this.tempPosition);                                 
+            }
+
+            this.ghosts = [];
+            this.selectedPiece = 0;
+            this.selectedCase = -1;
+        }     
+    }   
   }
   
-  mousemoveCase(event: MouseEvent, index: number) {
+  mousemoveCase(event: MouseEvent) {
     event.preventDefault();
     if (this.selectedPiece !== 0) {        
         this.selectedTop = event.clientY - 37.5 + 'px';
