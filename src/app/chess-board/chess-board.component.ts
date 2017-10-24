@@ -1,9 +1,12 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { MatDialog } from '@angular/material';
 import { Chessboard } from '../model/Chessboard';
 import { Piece } from '../model/Piece';
 import { Tools } from '../model/Tools';
 import { Position } from '../model/Position';
 import { Positions } from '../model/Positions';  
+
+import { PromoteDialogComponent } from '../promote-dialog/promote-dialog.component';
 
 @Component({
   selector: 'app-chess-board',
@@ -18,6 +21,8 @@ export class ChessBoardComponent implements OnInit {
   @Input() pieces: Piece[];
   
   @Input() position: Position;
+  
+  constructor(public promoteDialog: MatDialog) {}
   
   tempPosition: Position;
   selectedPiece: number = 0;
@@ -34,6 +39,26 @@ export class ChessBoardComponent implements OnInit {
   
   private _getRelativeIndex(index: number) {
       return this.chessboard.Side ? (63 - index) : index;
+  }
+  
+  openPromoteDialog(index, selectedCase): void {
+    let dialogRef = this.promoteDialog.open(PromoteDialogComponent, {
+      width: '375px',
+      height: '125px',     
+      data: { 
+        piece: this.piece.Title,
+        couleur: this.position.trait ? 'b' : 'n',
+      }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+        this.position.diag[index] = result;
+        
+        let positions = new Positions(this.tempPosition);
+        positions.generate();      
+        
+        this.position = positions.list.filter(p => p.diag[selectedCase] === 0 && p.diag[index] === result)[0];              
+    });
   }
   
   calcCaseClass(index:number) {
@@ -67,7 +92,14 @@ export class ChessBoardComponent implements OnInit {
     let positions = new Positions(this.tempPosition);
     positions.generate();
     
-    return positions.list.filter(p => p.diag[index] === 0).map(p => Tools.indexes.filter((c, i) => (p.diag[c] !== this.tempPosition.diag[c]) && i !== index && p.diag[c] === this.selectedPiece)[0]);  
+    return positions.list.filter(
+        p => p.diag[index] === 0
+    ).map(
+        p => Tools.indexes.filter(
+            (c, i) => (p.diag[c] !== this.tempPosition.diag[c]) && i !== index && p.diag[c] === this.selectedPiece
+        )[0]
+    );  
+    
   }
   
   mousedownCase(event: MouseEvent, index: number) {
@@ -75,46 +107,54 @@ export class ChessBoardComponent implements OnInit {
     
     let positions = new Positions(this.position);
     positions.generate();
-    console.log(positions.list.filter(p => p.diag[index] === 0));
-    if (this.isCasePlayable(positions, this._getRelativeIndex(index))) {        
+    
+    if (this.isCasePlayable(positions, this._getRelativeIndex(index))) {       
         this.tempPosition = Position.getPosition(this.position);               
         this.selectedPiece = this.position.diag[this._getRelativeIndex(index)];       
         this.ghosts = this.getGhosts(this._getRelativeIndex(index));  
         this.selectedCase = this._getRelativeIndex(index);
         this.position.diag[this._getRelativeIndex(index)] = 0;       
         this.selectedTop = event.clientY - 37.5 + 'px';
-        this.selectedLeft = event.clientX  - 37.5 + 'px';                 
+        this.selectedLeft = event.clientX  - 37.5 + 'px';                                
     }
   }
   
   mouseupCase(event: MouseEvent, index: number) {    
     event.preventDefault();
-    
-    if (index === this.selectedCase) {
-        this.position = Position.getPosition(this.tempPosition);
-        this.ghosts = [];
-        this.selectedPiece = 0;
-        this.selectedCase = -1;
-    } else {    
-        if (this.selectedPiece !== 0) {
+    if (this.selectedPiece !== 0) {
+        if (index === this.selectedCase) {
+            this.position = Position.getPosition(this.tempPosition);
+            
+            this.ghosts = [];
+            this.selectedPiece = 0;
+            this.selectedCase = -1;
+        } else {    
             this.position.diag[this._getRelativeIndex(index)] = this.selectedPiece;
 
             let positions = new Positions(this.tempPosition);
             positions.generate();
-
-            let aMoves = positions.list.filter((p) => p.diag[index] === this.position.diag[index] && p.diag[this.selectedCase] === this.position.diag[this.selectedCase]);                 
-
+                                                               
+            let aMoves = positions.list.filter(p => 
+                p.diag[this._getRelativeIndex(index)] === this.position.diag[this._getRelativeIndex(index)] 
+             && p.diag[this.selectedCase] === this.position.diag[this.selectedCase]
+            );
+            
             if (aMoves.length === 1) {
                 this.position = aMoves[0];
-            } else {            
-                this.position = Position.getPosition(this.tempPosition);                                 
+            } else {
+                let a = positions.list.filter(p => p.diag[this.selectedCase] === 0 && (p.move_type === 'PROMOTION' || p.move_type === 'PROMOTION_TAKE')); 
+                if (a.length > 0) {
+                    this.openPromoteDialog(this._getRelativeIndex(index), this.selectedCase);
+                } else {
+                    this.position = Position.getPosition(this.tempPosition);
+                }                               
             }
 
             this.ghosts = [];
             this.selectedPiece = 0;
             this.selectedCase = -1;
         }     
-    }   
+    }       
   }
   
   mousemoveCase(event: MouseEvent) {

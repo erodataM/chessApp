@@ -41,13 +41,13 @@ export class Positions {
     }
         
     promote(i: number, s:number) {        
-        this.list[this.list.length - 1].diag[i - s * 8] = 2 * s;
+        this.list[this.list.length - 1].diag[i] = 2 * s;
         this.list.push(Position.getPosition(this.list[this.list.length - 1]));                                 
-        this.list[this.list.length - 1].diag[i - s * 8] = 3 * s;
+        this.list[this.list.length - 1].diag[i] = 3 * s;
         this.list.push(Position.getPosition(this.list[this.list.length - 1]));
-        this.list[this.list.length - 1].diag[i - s * 8] = 4 * s;
+        this.list[this.list.length - 1].diag[i] = 4 * s;
         this.list.push(Position.getPosition(this.list[this.list.length - 1]));
-        this.list[this.list.length - 1].diag[i - s * 8] = 5 * s;
+        this.list[this.list.length - 1].diag[i] = 5 * s;
     }
     
     generate() {
@@ -75,7 +75,7 @@ export class Positions {
                         this.list[this.list.length - 1].pep = -1;
                         if (Tools.isOnPromotion(!this.list[this.list.length - 1].trait, i)) {
                             this.list[this.list.length - 1].move_type = 'PROMOTION';                            
-                            this.promote(i, s);                                                       
+                            this.promote(i - s * 8, s);                                                       
                         }                        
                     } else {
                         this.list.pop();
@@ -109,7 +109,7 @@ export class Positions {
                                 this.list[this.list.length - 1].pep = -1;							
                                 if (Tools.isOnPromotion(!this.list[this.list.length - 1].trait, i)) {
                                     this.list[this.list.length - 1].move_type = 'PROMOTION_TAKE';
-                                    this.promote(i, s);                                 
+                                    this.promote(i - s * Tools.tabPion[pion][1], s);                                 
                                 }                            
                             } else {
                                 this.list.pop();

@@ -1,2 +1,198 @@
 /* You can add global styles to this file, and also import other style files */
 @import '~@angular/material/prebuilt-themes/deeppurple-amber.css';
+
+md-dialog-container {
+  position: fixed;
+  left: 20%;  
+}
+
+.board {
+    padding: 22px;
+    width: 600px;
+    height: 600px;
+}
+
+.case {
+    height: 75px;
+    width: 75px;
+    float:left;
+}
+
+.selected {
+    position: absolute;
+    height: 75px;
+    width: 75px;
+    pointer-events: none;    
+}
+
+.ghost {
+    opacity: 0.5;
+    filter: alpha(opacity=50);
+}
+
+.erable.blanc {
+    background-image: url("/assets/images/echi_erable_c1.gif");    
+}
+.erable.noir {
+    background-image: url("/assets/images/echi_erable_c2.gif");
+}
+.babinga.blanc {
+    background-image: url("/assets/images/echi_babinga_c1.gif");
+}
+.babinga.noir {
+    background-image: url("/assets/images/echi_babinga_c2.gif");
+}
+.metal.blanc {
+    background-image: url("/assets/images/echi_metal_c1.gif");
+}
+.metal.noir {
+    background-image: url("/assets/images/echi_metal_c2.gif");
+}
+
+.crystal.pion {
+    background-image: url("/assets/images/crystal_pion.gif");
+}
+.crystal.piob {
+    background-image: url("/assets/images/crystal_piob.gif");
+}
+.crystal.cavn {
+    background-image: url("/assets/images/crystal_cavn.gif");
+}
+.crystal.cavb {
+    background-image: url("/assets/images/crystal_cavb.gif");
+}
+.crystal.foun {
+    background-image: url("/assets/images/crystal_foun.gif");
+}
+.crystal.foub {
+    background-image: url("/assets/images/crystal_foub.gif");
+}
+.crystal.toun {
+    background-image: url("/assets/images/crystal_toun.gif");
+}
+.crystal.toub {
+    background-image: url("/assets/images/crystal_toub.gif");
+}
+.crystal.damn {
+    background-image: url("/assets/images/crystal_damn.gif");
+}
+.crystal.damb {
+    background-image: url("/assets/images/crystal_damb.gif");
+}
+.crystal.roin {
+    background-image: url("/assets/images/crystal_roin.gif");
+}
+.crystal.roib {
+    background-image: url("/assets/images/crystal_roib.gif");
+}
+
+.oldstyle.pion {
+    background-image: url("/assets/images/oldstyle_pion.gif");
+}
+.oldstyle.piob {
+    background-image: url("/assets/images/oldstyle_piob.gif");
+}
+.oldstyle.cavn {
+    background-image: url("/assets/images/oldstyle_cavn.gif");
+}
+.oldstyle.cavb {
+    background-image: url("/assets/images/oldstyle_cavb.gif");
+}
+.oldstyle.foun {
+    background-image: url("/assets/images/oldstyle_foun.gif");
+}
+.oldstyle.foub {
+    background-image: url("/assets/images/oldstyle_foub.gif");
+}
+.oldstyle.toun {
+    background-image: url("/assets/images/oldstyle_toun.gif");
+}
+.oldstyle.toub {
+    background-image: url("/assets/images/oldstyle_toub.gif");
+}
+.oldstyle.damn {
+    background-image: url("/assets/images/oldstyle_damn.gif");
+}
+.oldstyle.damb {
+    background-image: url("/assets/images/oldstyle_damb.gif");
+}
+.oldstyle.roin {
+    background-image: url("/assets/images/oldstyle_roin.gif");
+}
+.oldstyle.roib {
+    background-image: url("/assets/images/oldstyle_roib.gif");
+}
+
+.fritz.pion {
+    background-image: url("/assets/images/fritz_pion.gif");
+}
+.fritz.piob {
+    background-image: url("/assets/images/fritz_piob.gif");
+}
+.fritz.cavn {
+    background-image: url("/assets/images/fritz_cavn.gif");
+}
+.fritz.cavb {
+    background-image: url("/assets/images/fritz_cavb.gif");
+}
+.fritz.foun {
+    background-image: url("/assets/images/fritz_foun.gif");
+}
+.fritz.foub {
+    background-image: url("/assets/images/fritz_foub.gif");
+}
+.fritz.toun {
+    background-image: url("/assets/images/fritz_toun.gif");
+}
+.fritz.toub {
+    background-image: url("/assets/images/fritz_toub.gif");
+}
+.fritz.damn {
+    background-image: url("/assets/images/fritz_damn.gif");
+}
+.fritz.damb {
+    background-image: url("/assets/images/fritz_damb.gif");
+}
+.fritz.roin {
+    background-image: url("/assets/images/fritz_roin.gif");
+}
+.fritz.roib {
+    background-image: url("/assets/images/fritz_roib.gif");
+}
+
+.habsburg.pion {
+    background-image: url("/assets/images/habsburg_pion.gif");
+}
+.habsburg.piob {
+    background-image: url("/assets/images/habsburg_piob.gif");
+}
+.habsburg.cavn {
+    background-image: url("/assets/images/habsburg_cavn.gif");
+}
+.habsburg.cavb {
+    background-image: url("/assets/images/habsburg_cavb.gif");
+}
+.habsburg.foun {
+    background-image: url("/assets/images/habsburg_foun.gif");
+}
+.habsburg.foub {
+    background-image: url("/assets/images/habsburg_foub.gif");
+}
+.habsburg.toun {
+    background-image: url("/assets/images/habsburg_toun.gif");
+}
+.habsburg.toub {
+    background-image: url("/assets/images/habsburg_toub.gif");
+}
+.habsburg.damn {
+    background-image: url("/assets/images/habsburg_damn.gif");
+}
+.habsburg.damb {
+    background-image: url("/assets/images/habsburg_damb.gif");
+}
+.habsburg.roin {
+    background-image: url("/assets/images/habsburg_roin.gif");
+}
+.habsburg.roib {
+    background-image: url("/assets/images/habsburg_roib.gif");
+}

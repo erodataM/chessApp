@@ -7,13 +7,15 @@ import { AppComponent } from './app.component';
 import { ChessBoardComponent } from './chess-board/chess-board.component';
 import { MenuComponent } from './menu/menu.component';
 
-import {MatButtonModule, MatCardModule, MatCheckboxModule, MatToolbarModule, MatFormFieldModule, MatInputModule, MatSelectModule} from '@angular/material';
+import {MatButtonModule, MatCardModule, MatCheckboxModule, MatToolbarModule, MatFormFieldModule, MatInputModule, MatSelectModule, MatDialogModule} from '@angular/material';
+import { PromoteDialogComponent } from './promote-dialog/promote-dialog.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     ChessBoardComponent,
-    MenuComponent
+    MenuComponent,
+    PromoteDialogComponent
   ],
   imports: [
     BrowserModule,
@@ -25,9 +27,11 @@ import {MatButtonModule, MatCardModule, MatCheckboxModule, MatToolbarModule, Mat
     MatInputModule,
     MatSelectModule,
     FormsModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    MatDialogModule
   ],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  entryComponents: [PromoteDialogComponent]
 })
 export class AppModule { }

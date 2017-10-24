@@ -3,7 +3,6 @@ import { Chessboard } from './model/Chessboard';
 import { Piece } from './model/Piece'; 
 
 import { Position } from './model/Position';
-import { Positions } from './model/Positions';
 
 @Component({
   selector: 'app-root',
@@ -28,7 +27,7 @@ export class AppComponent {
     new Piece('habsburg'),
   ]
   
-  position: Position = Position.getPositionFromFen('r3k2r/p1ppqpb1/bn2pnp1/3PN3/1p2P3/2N2Q1p/PPPBBPPP/R3K2R w KQkq -');
+  position: Position = Position.getPositionFromFen('rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq -');
   
   constructor() {
        console.log(this.position);
