@@ -1,5 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+
 import { NgModule } from '@angular/core';
 import {FormsModule} from '@angular/forms'
 
@@ -9,13 +10,15 @@ import { MenuComponent } from './menu/menu.component';
 
 import {MatButtonModule, MatCardModule, MatCheckboxModule, MatToolbarModule, MatFormFieldModule, MatInputModule, MatSelectModule, MatDialogModule} from '@angular/material';
 import { PromoteDialogComponent } from './promote-dialog/promote-dialog.component';
+import { NotationComponent } from './notation/notation.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     ChessBoardComponent,
     MenuComponent,
-    PromoteDialogComponent
+    PromoteDialogComponent,
+    NotationComponent
   ],
   imports: [
     BrowserModule,
@@ -28,7 +31,7 @@ import { PromoteDialogComponent } from './promote-dialog/promote-dialog.componen
     MatSelectModule,
     FormsModule,
     BrowserAnimationsModule,
-    MatDialogModule
+    MatDialogModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

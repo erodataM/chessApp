@@ -8,6 +8,7 @@ export class Position {
     gr: boolean[];
     pep: number;
     move_type: string;
+    move_notation: string;
     
     constructor(diag:number[], trait:boolean, roi: number[], pr: boolean[], gr: boolean[], pep:number, move_type: string) {
         let n;
@@ -33,6 +34,10 @@ export class Position {
         this.pep = pep;
         
         this.move_type = move_type;            
+    }
+    
+    calcMove(prevPosition: Position): void {
+        this.move_notation = 'e4';
     }
     
     isInCheck(): boolean {

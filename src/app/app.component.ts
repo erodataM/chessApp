@@ -3,6 +3,7 @@ import { Chessboard } from './model/Chessboard';
 import { Piece } from './model/Piece'; 
 
 import { Position } from './model/Position';
+import { Game } from './model/Game';
 
 @Component({
   selector: 'app-root',
@@ -29,7 +30,9 @@ export class AppComponent {
   
   position: Position = Position.getPositionFromFen('rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq -');
   
+  game: Game;
+  
   constructor() {
-       console.log(this.position);
+      this.game = new Game(this.position);
   }
 }

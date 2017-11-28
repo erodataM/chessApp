@@ -3,10 +3,19 @@
           [piece]="piece"
           [pieces]="pieces">
 </app-menu>
-<br/><br/>
-<app-chess-board [chessboards]="chessboards"
-                 [chessboard]="chessboard"
-                 [piece]="piece"
-                 [pieces]="pieces"
-                 [position]="position">
-</app-chess-board>
+<div layout="row">
+    <div flex>
+        <app-chess-board [chessboards]="chessboards"
+                         [chessboard]="chessboard"
+                         [piece]="piece"
+                         [pieces]="pieces"
+                         [position]="position"
+                         [game]="game">
+        </app-chess-board>
+    </div>
+    <div flex>
+        <app-notation [game]="game">
+            
+        </app-notation>
+    </div>
+</div>

@@ -4,7 +4,8 @@ import { Chessboard } from '../model/Chessboard';
 import { Piece } from '../model/Piece';
 import { Tools } from '../model/Tools';
 import { Position } from '../model/Position';
-import { Positions } from '../model/Positions';  
+import { Positions } from '../model/Positions';
+import { Game } from '../model/Game';  
 
 import { PromoteDialogComponent } from '../promote-dialog/promote-dialog.component';
 
@@ -21,6 +22,8 @@ export class ChessBoardComponent implements OnInit {
   @Input() pieces: Piece[];
   
   @Input() position: Position;
+  
+  @Input() game: Game;
   
   constructor(public promoteDialog: MatDialog) {}
   
@@ -57,7 +60,9 @@ export class ChessBoardComponent implements OnInit {
         let positions = new Positions(this.tempPosition);
         positions.generate();      
         
-        this.position = positions.list.filter(p => p.diag[selectedCase] === 0 && p.diag[index] === result)[0];              
+        this.position = positions.list.filter(p => p.diag[selectedCase] === 0 && p.diag[index] === result)[0];
+        this.position.calcMove(this.tempPosition);
+        this.game.list.push(this.position);             
     });
   }
   
@@ -141,6 +146,8 @@ export class ChessBoardComponent implements OnInit {
             
             if (aMoves.length === 1) {
                 this.position = aMoves[0];
+                this.position.calcMove(this.tempPosition);
+                this.game.list.push(this.position);
             } else {
                 let a = positions.list.filter(p => p.diag[this.selectedCase] === 0 && (p.move_type === 'PROMOTION' || p.move_type === 'PROMOTION_TAKE')); 
                 if (a.length > 0) {
